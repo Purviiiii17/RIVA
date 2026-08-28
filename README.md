@@ -1,10 +1,12 @@
-AI Finance Controller
+RIVA — AI Finance Controller
 
-AI-assisted financial reconciliation and settlement investigation system built for the Razorpay Buildathon – AI Finance Controller track.
+Reconciliation & Investigation Virtual Agent
 
-Overview
+AI-assisted financial reconciliation for multi-source payment data, with deterministic checks, AI investigation, fallback recovery, human escalation, and evidence-based settlement Q&A.
 
-The system processes a synthetic batch of 500 financial transactions across multiple sources:
+🚀 What It Does
+
+RIVA reconciles financial records across:
 
 Company ledger
 
@@ -14,58 +16,55 @@ Bank statement
 
 Invoices
 
-Ground-truth labels
+It uses code for deterministic financial checks and AI only for unresolved cases.
 
-It combines deterministic reconciliation with AI investigation so that strict financial checks are handled by code, while unresolved cases can be investigated by an LLM.
+🧠 Architecture
 
-Architecture
+                  500 Financial Transactions
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │   Rule-Based Engine     │
+              │ Ledger • Settlement     │
+              │ Bank • Invoice          │
+              └────────────┬────────────┘
+                           │
+             ┌─────────────┼─────────────┐
+             ▼             ▼             ▼
+          MATCH       HUMAN REVIEW    AI CASES
+           373             69             58
+                                          │
+                                          ▼
+                                    ┌───────────┐
+                                    │  Gemini   │
+                                    │  Primary  │
+                                    └─────┬─────┘
+                                          │
+                                   Failure / 503 / Quota
+                                          │
+                                          ▼
+                                    ┌───────────┐
+                                    │   Groq    │
+                                    │  Fallback │
+                                    └─────┬─────┘
+                                          │
+                                          ▼
+                                    Final Decision
+                                          │
+                                          ▼
+                                      Audit Log
 
-                    ┌─────────────────────┐
-                    │  Synthetic Dataset  │
-                    │      500 records    │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │ Rule-Based          │
-                    │ Reconciliation      │
-                    └──────────┬──────────┘
-                               │
-              ┌────────────────┼────────────────┐
-              │                │                │
-              ▼                ▼                ▼
-          MATCHED         HUMAN_REVIEW       AI CASES
-          373                69                58
-                                                │
-                                                ▼
-                                      ┌─────────────────┐
-                                      │ Gemini (Primary)│
-                                      └────────┬────────┘
-                                               │
-                                      API failure / unavailable
-                                               │
-                                               ▼
-                                      ┌─────────────────┐
-                                      │ Groq (Fallback) │
-                                      └────────┬────────┘
-                                               │
-                                               ▼
-                                      Final AI Decision
-                                               │
-                                               ▼
-                                      Audit Log / Output
-
-Key Features
+⚙️ Key Features
 
 Multi-source reconciliation
 
-Matches ledger, settlement, bank, and invoice information at the transaction level.
+Combines ledger, settlement, bank, and invoice evidence at the transaction level.
 
-Deterministic financial rules
+Deterministic financial checks
 
-Handles objective checks such as:
+Handles:
 
-Exact reconciliation
+Exact matches
 
 Processing fees
 
@@ -73,7 +72,7 @@ Refunds
 
 Date shifts
 
-Reference variations
+Reference typos
 
 Partial payments
 
@@ -85,43 +84,148 @@ Missing bank records
 
 AI investigation
 
-Only unresolved transactions are sent to the AI layer.
+Only unresolved cases are sent to the AI layer.
 
-Gemini is used as the primary model, with Groq as a fallback when Gemini is unavailable or encounters an API failure.
+Primary: Gemini
+Fallback: Groq
 
-Safety controls
+Safety & reliability
 
-The system:
+Missing records are distinguished from zero-value records.
 
-Does not treat a missing record as a zero-value record.
+Multiple settlement records are aggregated before reconciliation.
 
-Uses a confidence threshold for AI decisions.
+Low-confidence AI decisions can be escalated to HUMAN_REVIEW.
 
-Escalates uncertain results to HUMAN_REVIEW.
+Groq retries rate-limit failures.
 
-Falls back to a secondary AI provider when the primary provider fails.
+If both AI providers fail, the case safely goes to HUMAN_REVIEW.
 
-Records AI decisions and errors in an audit log.
+Every AI investigation is recorded in audit_log.csv.
 
 Settlement Q&A
 
-A separate assistant answers transaction-specific settlement questions using the underlying financial evidence and audit trail.
-
-Example:
+Ask transaction-specific questions such as:
 
 Why is TXN0013 an exception?
 
+RIVA retrieves the relevant financial evidence and explains the decision.
+
 Transaction Inspector
 
-Inspect an individual transaction with:
+Inspect a transaction directly:
 
 python src/inspector.py TXN0013
 
-The inspector shows ledger, settlement, bank, invoice, reconciliation, and AI-audit information.
+The inspector shows the ledger, settlement, bank, invoice, reconciliation result, and AI audit trail.
 
-Project Structure
+📊 Results
 
-AI FINANCE CONTROLLER/
+Reconciliation
+
+Decision
+
+Count
+
+Share
+
+MATCH
+
+373
+
+74.6%
+
+HUMAN_REVIEW
+
+69
+
+13.8%
+
+EXCEPTION
+
+58
+
+11.6%
+
+Total
+
+500
+
+100%
+
+AI Investigation
+
+Metric
+
+Result
+
+AI cases
+
+58
+
+Gemini
+
+52
+
+Groq fallback
+
+6
+
+API errors in final run
+
+0
+
+Correct AI decisions
+
+58 / 58
+
+End-to-end Evaluation
+
+500 / 500 correct — 100.00%
+
+This result is measured against the project's current synthetic dataset and ground-truth labels.
+
+🔄 Failure Recovery
+
+RIVA does not depend on a single AI provider:
+
+Gemini
+  │
+  ├── success ─────────────► decision
+  │
+  └── failure
+         │
+         ▼
+       Groq
+         │
+         ├── success ───────► decision
+         │
+         └── failure
+                │
+                ▼
+           HUMAN_REVIEW
+
+During development, Gemini quota/availability errors and Groq token-rate limits were encountered and handled through fallback, retries, and safe human escalation.
+
+🛠️ Tech Stack
+
+Python
+
+Pandas
+
+Gemini API
+
+Groq API
+
+Pydantic
+
+python-dotenv
+
+Rich
+
+📁 Project Structure
+
+ai-finance-controller/
 │
 ├── data/
 │   ├── ai_cases.csv
@@ -137,6 +241,7 @@ AI FINANCE CONTROLLER/
 │
 ├── src/
 │   ├── ai_investigator.py
+│   ├── dashboard.py
 │   ├── data_generator.py
 │   ├── evaluator.py
 │   ├── inspector.py
@@ -145,25 +250,25 @@ AI FINANCE CONTROLLER/
 │
 ├── .env
 ├── .gitignore
-├── requirements.txt
-└── README.md
+├── README.md
+└── requirements.txt
 
-Setup
+▶️ Setup
 
-1. Install dependencies
+Install dependencies
 
 pip install -r requirements.txt
 
-2. Configure API keys
+Configure API keys
 
-Create a .env file:
+Create a local .env file:
 
 GEMINI_API_KEY=your_gemini_key
 GROQ_API_KEY=your_groq_key
 
-Do not commit .env to Git.
+Never commit .env to Git.
 
-Running the Project
+▶️ Run
 
 Generate synthetic data
 
@@ -177,9 +282,13 @@ Run AI investigation
 
 python src/ai_investigator.py
 
-Evaluate the complete system
+Evaluate the complete pipeline
 
 python src/evaluator.py
+
+Launch the dashboard
+
+python src/dashboard.py
 
 Ask settlement questions
 
@@ -189,82 +298,20 @@ Inspect one transaction
 
 python src/inspector.py TXN0013
 
-Current Test Results
+🎯 Design Philosophy
 
-The current synthetic dataset contains 500 transactions.
+RIVA intentionally follows a layered approach:
 
-Reconciliation
-
-MATCHED        373
-HUMAN_REVIEW    69
-UNMATCHED       58
-
-The 58 unresolved transactions are sent to the AI investigation stage.
-
-AI investigation
-
-The latest verified run processed all 58 AI cases successfully:
-
-Gemini       52
-Groq          6
-API errors    0
-
-AI-stage decisions:
-
-EXCEPTION    58
-
-End-to-end evaluation
-
-The latest verified evaluation produced:
-
-Total transactions: 500
-Correct decisions: 500
-Overall accuracy: 100.00%
-Unresolved decisions: 0
-Incorrect decisions: 0
-
-This accuracy is measured on the current synthetic dataset and its ground-truth labels.
-
-Reliability and Failure Recovery
-
-The system was designed so that AI availability is not a single point of failure:
-
-Gemini
-  │
-  ├── success ─────────────► Decision
-  │
-  └── failure
-          │
-          ▼
-        Groq
-          │
-          ├── success ─────► Decision
-          │
-          └── failure
-                  │
-                  ▼
-             HUMAN_REVIEW
-
-The project also encountered and handled API rate limits, including Gemini request quotas and Groq token-per-minute limits.
-
-Design Philosophy
-
-The system intentionally does not send every transaction to an LLM.
-
-Deterministic financial logic is handled in Python because calculations, aggregation, and record existence checks should be explicit and auditable.
-
-AI is reserved for investigation of cases that remain unresolved after deterministic checks.
-
-This produces a finance workflow built around:
-
-Deterministic checks
+Deterministic Controls
         +
-AI investigation
+AI Investigation
         +
-Fallback resilience
+Provider Fallback
         +
-Human safety escalation
+Human Safety Escalation
 
-Disclaimer
+Financial calculations and reconciliation rules remain explicit and auditable. AI is used where contextual investigation adds value.
 
-The datasets used by this project are synthetic and are intended for demonstration and evaluation purposes only.
+⚠️ Disclaimer
+
+All financial records in this project are synthetic and are intended only for demonstration and evaluation.
