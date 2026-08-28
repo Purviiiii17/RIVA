@@ -317,11 +317,24 @@ python src/evaluator.py
 </details>
 
 <details>
-<summary><b>Launch dashboard</b></summary>
+<summary><b>Launch the Streamlit dashboard</b></summary>
+
+```bash
+streamlit run src/app.py
+```
+
+This is the browser dashboard. It reads existing CSV results. Settlement Q&A calls Gemini/Groq only when you ask a question.
+
+</details>
+
+<details>
+<summary><b>Launch the terminal dashboard</b></summary>
 
 ```bash
 python src/dashboard.py
 ```
+
+Rich CLI summary of the latest evaluated dataset.
 
 </details>
 
@@ -364,6 +377,7 @@ ai-finance-controller/
 │
 ├── src/
 │   ├── ai_investigator.py
+│   ├── app.py
 │   ├── dashboard.py
 │   ├── data_generator.py
 │   ├── evaluator.py
@@ -380,7 +394,7 @@ ai-finance-controller/
 
 ## ✦ Tech Stack
 
-**Python** · **Pandas** · **Gemini API** · **Groq API** · **Pydantic** · **python-dotenv** · **Rich**
+**Python** · **Pandas** · **Streamlit** · **Gemini API** · **Groq API** · **Pydantic** · **python-dotenv** · **Rich**
 
 ---
 

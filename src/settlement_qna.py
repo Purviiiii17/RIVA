@@ -1,6 +1,8 @@
 import os
 import re
 import json
+from pathlib import Path
+
 import pandas as pd
 
 from dotenv import load_dotenv
@@ -15,46 +17,64 @@ from openai import OpenAI
 GEMINI_MODEL = "gemini-3.6-flash"
 GROQ_MODEL = "openai/gpt-oss-20b"
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data"
 
-# =============================
-# API SETUP
-# =============================
+gemini_client = None
+groq_client = None
 
-load_dotenv()
-
-gemini_key = os.getenv("GEMINI_API_KEY")
-groq_key = os.getenv("GROQ_API_KEY")
-
-if not gemini_key:
-    raise ValueError("GEMINI_API_KEY not found in .env")
-
-if not groq_key:
-    raise ValueError("GROQ_API_KEY not found in .env")
-
-gemini_client = genai.Client(
-    api_key=gemini_key
-)
-
-groq_client = OpenAI(
-    base_url="https://api.groq.com/openai/v1",
-    api_key=groq_key,
-)
+ledger = None
+settlements = None
+bank = None
+invoices = None
+reconciliation = None
+audit_log = None
 
 
-# =============================
-# LOAD DATA
-# =============================
+def _ensure_clients():
+    global gemini_client, groq_client
 
-ledger = pd.read_csv("data/company_ledger.csv")
-settlements = pd.read_csv("data/settlements.csv")
-bank = pd.read_csv("data/bank_statement.csv")
-invoices = pd.read_csv("data/invoices.csv")
-reconciliation = pd.read_csv(
-    "data/reconciliation_results.csv"
-)
-audit_log = pd.read_csv(
-    "data/audit_log.csv"
-)
+    if gemini_client is not None and groq_client is not None:
+        return
+
+    load_dotenv()
+
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    groq_key = os.getenv("GROQ_API_KEY")
+
+    if not gemini_key:
+        raise ValueError("GEMINI_API_KEY not found in .env")
+
+    if not groq_key:
+        raise ValueError("GROQ_API_KEY not found in .env")
+
+    gemini_client = genai.Client(
+        api_key=gemini_key
+    )
+
+    groq_client = OpenAI(
+        base_url="https://api.groq.com/openai/v1",
+        api_key=groq_key,
+    )
+
+
+def _load_data():
+    global ledger, settlements, bank, invoices
+    global reconciliation, audit_log
+
+    if ledger is not None:
+        return
+
+    ledger = pd.read_csv(DATA_DIR / "company_ledger.csv")
+    settlements = pd.read_csv(DATA_DIR / "settlements.csv")
+    bank = pd.read_csv(DATA_DIR / "bank_statement.csv")
+    invoices = pd.read_csv(DATA_DIR / "invoices.csv")
+    reconciliation = pd.read_csv(
+        DATA_DIR / "reconciliation_results.csv"
+    )
+    audit_log = pd.read_csv(
+        DATA_DIR / "audit_log.csv"
+    )
 
 
 # =============================
@@ -75,6 +95,8 @@ def extract_transaction_id(question):
 # =============================
 
 def get_transaction_evidence(transaction_id):
+
+    _load_data()
 
     evidence = {
         "transaction_id": transaction_id,
@@ -153,6 +175,8 @@ Transaction evidence:
 
 def ask_gemini(prompt):
 
+    _ensure_clients()
+
     response = gemini_client.models.generate_content(
         model=GEMINI_MODEL,
         contents=prompt
@@ -167,6 +191,8 @@ def ask_gemini(prompt):
 
 
 def ask_groq(prompt):
+
+    _ensure_clients()
 
     response = groq_client.chat.completions.create(
         model=GROQ_MODEL,
@@ -235,59 +261,67 @@ def answer_question(question, evidence):
 # Q&A LOOP
 # =============================
 
-print("\n==============================")
-print("      SETTLEMENT Q&A")
-print("==============================")
+def main():
+    _ensure_clients()
+    _load_data()
 
-print("Ask about a transaction, for example:")
-print("- Why is TXN0013 an exception?")
-print("- What happened with TXN0207?")
-print("- Why was TXN0040 sent for review?")
-print("\nType 'exit' to quit.")
+    print("\n==============================")
+    print("      SETTLEMENT Q&A")
+    print("==============================")
+
+    print("Ask about a transaction, for example:")
+    print("- Why is TXN0013 an exception?")
+    print("- What happened with TXN0207?")
+    print("- Why was TXN0040 sent for review?")
+    print("\nType 'exit' to quit.")
 
 
-while True:
+    while True:
 
-    question = input("\nQuestion: ").strip()
+        question = input("\nQuestion: ").strip()
 
-    if question.lower() == "exit":
-        print("Goodbye.")
-        break
+        if question.lower() == "exit":
+            print("Goodbye.")
+            break
 
-    transaction_id = extract_transaction_id(
-        question
-    )
-
-    if not transaction_id:
-        print(
-            "\nPlease include a transaction ID "
-            "such as TXN0013."
+        transaction_id = extract_transaction_id(
+            question
         )
-        continue
 
-    evidence = get_transaction_evidence(
-        transaction_id
-    )
+        if not transaction_id:
+            print(
+                "\nPlease include a transaction ID "
+                "such as TXN0013."
+            )
+            continue
 
-    if not any(
-        evidence[key]
-        for key in evidence
-        if key != "transaction_id"
-    ):
-        print(
-            f"\nNo records found for {transaction_id}."
+        evidence = get_transaction_evidence(
+            transaction_id
         )
-        continue
 
-    print("\nInvestigating...")
+        if not any(
+            evidence[key]
+            for key in evidence
+            if key != "transaction_id"
+        ):
+            print(
+                f"\nNo records found for {transaction_id}."
+            )
+            continue
 
-    answer, provider = answer_question(
-        question,
-        evidence
-    )
+        print("\nInvestigating...")
 
-    print("\n------------------------------")
-    print(f"AI Provider: {provider}")
-    print("Answer:")
-    print(answer)
-    print("------------------------------")
+        answer, provider = answer_question(
+            question,
+            evidence
+        )
+
+        print("\n------------------------------")
+        print(f"AI Provider: {provider}")
+        print("Answer:")
+        print(answer)
+        print("------------------------------")
+
+
+if __name__ == "__main__":
+    main()

@@ -24,23 +24,33 @@ MODEL_GROQ = "openai/gpt-oss-20b"
 # API SETUP
 # =============================
 
-load_dotenv()
+gemini_client = None
+groq_client = None
 
-gemini_key = os.getenv("GEMINI_API_KEY")
-groq_key = os.getenv("GROQ_API_KEY")
 
-if not gemini_key:
-    raise ValueError("GEMINI_API_KEY not found in .env")
+def _ensure_clients():
+    global gemini_client, groq_client
 
-if not groq_key:
-    raise ValueError("GROQ_API_KEY not found in .env")
+    if gemini_client is not None and groq_client is not None:
+        return
 
-gemini_client = genai.Client(api_key=gemini_key)
+    load_dotenv()
 
-groq_client = OpenAI(
-    base_url="https://api.groq.com/openai/v1",
-    api_key=groq_key,
-)
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    groq_key = os.getenv("GROQ_API_KEY")
+
+    if not gemini_key:
+        raise ValueError("GEMINI_API_KEY not found in .env")
+
+    if not groq_key:
+        raise ValueError("GROQ_API_KEY not found in .env")
+
+    gemini_client = genai.Client(api_key=gemini_key)
+
+    groq_client = OpenAI(
+        base_url="https://api.groq.com/openai/v1",
+        api_key=groq_key,
+    )
 
 
 # =============================
@@ -66,9 +76,10 @@ class BatchAIResult(BaseModel):
 # LOAD CASES
 # =============================
 
-ai_cases = pd.read_csv("data/ai_cases.csv")
-
-print("Cases available for AI:", len(ai_cases))
+def load_ai_cases():
+    ai_cases = pd.read_csv("data/ai_cases.csv")
+    print("Cases available for AI:", len(ai_cases))
+    return ai_cases
 
 
 # =============================
@@ -247,6 +258,8 @@ def process_results(
 # =============================
 
 def investigate_with_gemini(batch, prompt):
+    _ensure_clients()
+
     start = time.perf_counter()
 
     response = gemini_client.models.generate_content(
@@ -278,6 +291,8 @@ def investigate_with_gemini(batch, prompt):
 # =============================
 
 def investigate_with_groq(batch, prompt):
+    _ensure_clients()
+
     last_error = None
 
     schema = {
@@ -451,76 +466,84 @@ def investigate_batch(batch):
 # RUN
 # =============================
 
-batches = [
-    ai_cases.iloc[i:i + BATCH_SIZE]
-    for i in range(0, len(ai_cases), BATCH_SIZE)
-]
+def main():
+    _ensure_clients()
+    ai_cases = load_ai_cases()
 
-all_results = []
-start_time = time.perf_counter()
+    batches = [
+        ai_cases.iloc[i:i + BATCH_SIZE]
+        for i in range(0, len(ai_cases), BATCH_SIZE)
+    ]
 
-for batch_number, batch in enumerate(batches, start=1):
+    all_results = []
+    start_time = time.perf_counter()
+
+    for batch_number, batch in enumerate(batches, start=1):
+        print(
+            f"\nProcessing batch "
+            f"{batch_number}/{len(batches)} "
+            f"({len(batch)} cases)..."
+        )
+
+        all_results.extend(
+            investigate_batch(batch)
+        )
+
+        print(f"Batch {batch_number} complete.")
+
+        if batch_number < len(batches):
+            time.sleep(BATCH_DELAY)
+
+
+    # =============================
+    # SAVE AUDIT LOG
+    # =============================
+
+    audit_log = pd.DataFrame(all_results)
+
+    audit_log.to_csv(
+        "data/audit_log.csv",
+        index=False
+    )
+
+
+    # =============================
+    # SUMMARY
+    # =============================
+
+    total_time = time.perf_counter() - start_time
+
+    print("\nAI investigation complete.")
+    print("Cases processed:", len(audit_log))
+
+    print("\nAI status:")
+    print(audit_log["ai_status"].value_counts())
+
+    print("\nAI provider:")
+    print(audit_log["ai_provider"].value_counts())
+
+    successful = audit_log[
+        audit_log["ai_status"] == "SUCCESS"
+    ]
+
+    if not successful.empty:
+        print("\nAI decisions:")
+        print(successful["ai_decision"].value_counts())
+
+        print("\nSafety overrides:")
+        print(successful["safety_override"].value_counts())
+
+    print("\nFinal decisions:")
+    print(audit_log["final_decision"].value_counts())
+
     print(
-        f"\nProcessing batch "
-        f"{batch_number}/{len(batches)} "
-        f"({len(batch)} cases)..."
+        f"\nTotal processing time: "
+        f"{total_time:.2f} seconds"
     )
 
-    all_results.extend(
-        investigate_batch(batch)
-    )
-
-    print(f"Batch {batch_number} complete.")
-
-    if batch_number < len(batches):
-        time.sleep(BATCH_DELAY)
+    print("\nAudit log saved to:")
+    print("data/audit_log.csv")
 
 
-# =============================
-# SAVE AUDIT LOG
-# =============================
-
-audit_log = pd.DataFrame(all_results)
-
-audit_log.to_csv(
-    "data/audit_log.csv",
-    index=False
-)
-
-
-# =============================
-# SUMMARY
-# =============================
-
-total_time = time.perf_counter() - start_time
-
-print("\nAI investigation complete.")
-print("Cases processed:", len(audit_log))
-
-print("\nAI status:")
-print(audit_log["ai_status"].value_counts())
-
-print("\nAI provider:")
-print(audit_log["ai_provider"].value_counts())
-
-successful = audit_log[
-    audit_log["ai_status"] == "SUCCESS"
-]
-
-if not successful.empty:
-    print("\nAI decisions:")
-    print(successful["ai_decision"].value_counts())
-
-    print("\nSafety overrides:")
-    print(successful["safety_override"].value_counts())
-
-print("\nFinal decisions:")
-print(audit_log["final_decision"].value_counts())
-
-print(
-    f"\nTotal processing time: "
-    f"{total_time:.2f} seconds"
-)
-
-print("\nAudit log saved to:")
-print("data/audit_log.csv")
+if __name__ == "__main__":
+    main()
