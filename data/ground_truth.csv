@@ -1,0 +1,501 @@
+event_id,scenario,correct_match,expected_status,expected_reason
+E0001,reference_typo,TXN0001,MATCH,Reference contains a minor formatting difference.
+E0002,date_shift,TXN0002,MATCH,Settlement occurred within the allowed date window.
+E0003,exact_match,TXN0003,MATCH,Records agree.
+E0004,refund,TXN0004,MATCH,Settlement difference is explained by refund.
+E0005,exact_match,TXN0005,MATCH,Records agree.
+E0006,reference_typo,TXN0006,MATCH,Reference contains a minor formatting difference.
+E0007,exact_match,TXN0007,MATCH,Records agree.
+E0008,exact_match,TXN0008,MATCH,Records agree.
+E0009,exact_match,TXN0009,MATCH,Records agree.
+E0010,exact_match,TXN0010,MATCH,Records agree.
+E0011,partial_payment,TXN0011,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0012,date_shift,TXN0012,MATCH,Settlement occurred within the allowed date window.
+E0013,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0014,exact_match,TXN0014,MATCH,Records agree.
+E0015,exact_match,TXN0015,MATCH,Records agree.
+E0016,refund,TXN0016,MATCH,Settlement difference is explained by refund.
+E0017,fee_difference,TXN0017,MATCH,Settlement difference is explained by processing fee.
+E0018,date_shift,TXN0018,MATCH,Settlement occurred within the allowed date window.
+E0019,exact_match,TXN0019,MATCH,Records agree.
+E0020,exact_match,TXN0020,MATCH,Records agree.
+E0021,exact_match,TXN0021,MATCH,Records agree.
+E0022,exact_match,TXN0022,MATCH,Records agree.
+E0023,exact_match,TXN0023,MATCH,Records agree.
+E0024,reference_typo,TXN0024,MATCH,Reference contains a minor formatting difference.
+E0025,partial_payment,TXN0025,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0026,exact_match,TXN0026,MATCH,Records agree.
+E0027,multiple_settlements,TXN0027,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0028,reference_typo,TXN0028,MATCH,Reference contains a minor formatting difference.
+E0029,exact_match,TXN0029,MATCH,Records agree.
+E0030,reference_typo,TXN0030,MATCH,Reference contains a minor formatting difference.
+E0031,partial_payment,TXN0031,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0032,exact_match,TXN0032,MATCH,Records agree.
+E0033,refund,TXN0033,MATCH,Settlement difference is explained by refund.
+E0034,multiple_settlements,TXN0034,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0035,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0036,reference_typo,TXN0036,MATCH,Reference contains a minor formatting difference.
+E0037,exact_match,TXN0037,MATCH,Records agree.
+E0038,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0039,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0040,multiple_settlements,TXN0040,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0041,exact_match,TXN0041,MATCH,Records agree.
+E0042,exact_match,TXN0042,MATCH,Records agree.
+E0043,exact_match,TXN0043,MATCH,Records agree.
+E0044,exact_match,TXN0044,MATCH,Records agree.
+E0045,exact_match,TXN0045,MATCH,Records agree.
+E0046,reference_typo,TXN0046,MATCH,Reference contains a minor formatting difference.
+E0047,date_shift,TXN0047,MATCH,Settlement occurred within the allowed date window.
+E0048,multiple_settlements,TXN0048,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0049,exact_match,TXN0049,MATCH,Records agree.
+E0050,exact_match,TXN0050,MATCH,Records agree.
+E0051,exact_match,TXN0051,MATCH,Records agree.
+E0052,partial_payment,TXN0052,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0053,partial_payment,TXN0053,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0054,exact_match,TXN0054,MATCH,Records agree.
+E0055,exact_match,TXN0055,MATCH,Records agree.
+E0056,exact_match,TXN0056,MATCH,Records agree.
+E0057,exact_match,TXN0057,MATCH,Records agree.
+E0058,reference_typo,TXN0058,MATCH,Reference contains a minor formatting difference.
+E0059,exact_match,TXN0059,MATCH,Records agree.
+E0060,exact_match,TXN0060,MATCH,Records agree.
+E0061,refund,TXN0061,MATCH,Settlement difference is explained by refund.
+E0062,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0063,refund,TXN0063,MATCH,Settlement difference is explained by refund.
+E0064,fee_difference,TXN0064,MATCH,Settlement difference is explained by processing fee.
+E0065,exact_match,TXN0065,MATCH,Records agree.
+E0066,fee_difference,TXN0066,MATCH,Settlement difference is explained by processing fee.
+E0067,refund,TXN0067,MATCH,Settlement difference is explained by refund.
+E0068,exact_match,TXN0068,MATCH,Records agree.
+E0069,multiple_settlements,TXN0069,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0070,date_shift,TXN0070,MATCH,Settlement occurred within the allowed date window.
+E0071,date_shift,TXN0071,MATCH,Settlement occurred within the allowed date window.
+E0072,exact_match,TXN0072,MATCH,Records agree.
+E0073,exact_match,TXN0073,MATCH,Records agree.
+E0074,date_shift,TXN0074,MATCH,Settlement occurred within the allowed date window.
+E0075,multiple_settlements,TXN0075,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0076,exact_match,TXN0076,MATCH,Records agree.
+E0077,exact_match,TXN0077,MATCH,Records agree.
+E0078,exact_match,TXN0078,MATCH,Records agree.
+E0079,exact_match,TXN0079,MATCH,Records agree.
+E0080,exact_match,TXN0080,MATCH,Records agree.
+E0081,multiple_settlements,TXN0081,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0082,reference_typo,TXN0082,MATCH,Reference contains a minor formatting difference.
+E0083,multiple_settlements,TXN0083,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0084,reference_typo,TXN0084,MATCH,Reference contains a minor formatting difference.
+E0085,exact_match,TXN0085,MATCH,Records agree.
+E0086,partial_payment,TXN0086,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0087,exact_match,TXN0087,MATCH,Records agree.
+E0088,exact_match,TXN0088,MATCH,Records agree.
+E0089,date_shift,TXN0089,MATCH,Settlement occurred within the allowed date window.
+E0090,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0091,exact_match,TXN0091,MATCH,Records agree.
+E0092,exact_match,TXN0092,MATCH,Records agree.
+E0093,exact_match,TXN0093,MATCH,Records agree.
+E0094,fee_difference,TXN0094,MATCH,Settlement difference is explained by processing fee.
+E0095,exact_match,TXN0095,MATCH,Records agree.
+E0096,date_shift,TXN0096,MATCH,Settlement occurred within the allowed date window.
+E0097,exact_match,TXN0097,MATCH,Records agree.
+E0098,refund,TXN0098,MATCH,Settlement difference is explained by refund.
+E0099,refund,TXN0099,MATCH,Settlement difference is explained by refund.
+E0100,exact_match,TXN0100,MATCH,Records agree.
+E0101,date_shift,TXN0101,MATCH,Settlement occurred within the allowed date window.
+E0102,fee_difference,TXN0102,MATCH,Settlement difference is explained by processing fee.
+E0103,fee_difference,TXN0103,MATCH,Settlement difference is explained by processing fee.
+E0104,partial_payment,TXN0104,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0105,partial_payment,TXN0105,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0106,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0107,exact_match,TXN0107,MATCH,Records agree.
+E0108,fee_difference,TXN0108,MATCH,Settlement difference is explained by processing fee.
+E0109,multiple_settlements,TXN0109,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0110,fee_difference,TXN0110,MATCH,Settlement difference is explained by processing fee.
+E0111,exact_match,TXN0111,MATCH,Records agree.
+E0112,refund,TXN0112,MATCH,Settlement difference is explained by refund.
+E0113,exact_match,TXN0113,MATCH,Records agree.
+E0114,fee_difference,TXN0114,MATCH,Settlement difference is explained by processing fee.
+E0115,reference_typo,TXN0115,MATCH,Reference contains a minor formatting difference.
+E0116,exact_match,TXN0116,MATCH,Records agree.
+E0117,exact_match,TXN0117,MATCH,Records agree.
+E0118,exact_match,TXN0118,MATCH,Records agree.
+E0119,exact_match,TXN0119,MATCH,Records agree.
+E0120,exact_match,TXN0120,MATCH,Records agree.
+E0121,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0122,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0123,reference_typo,TXN0123,MATCH,Reference contains a minor formatting difference.
+E0124,exact_match,TXN0124,MATCH,Records agree.
+E0125,exact_match,TXN0125,MATCH,Records agree.
+E0126,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0127,refund,TXN0127,MATCH,Settlement difference is explained by refund.
+E0128,exact_match,TXN0128,MATCH,Records agree.
+E0129,exact_match,TXN0129,MATCH,Records agree.
+E0130,reference_typo,TXN0130,MATCH,Reference contains a minor formatting difference.
+E0131,partial_payment,TXN0131,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0132,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0133,reference_typo,TXN0133,MATCH,Reference contains a minor formatting difference.
+E0134,exact_match,TXN0134,MATCH,Records agree.
+E0135,exact_match,TXN0135,MATCH,Records agree.
+E0136,fee_difference,TXN0136,MATCH,Settlement difference is explained by processing fee.
+E0137,refund,TXN0137,MATCH,Settlement difference is explained by refund.
+E0138,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0139,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0140,exact_match,TXN0140,MATCH,Records agree.
+E0141,date_shift,TXN0141,MATCH,Settlement occurred within the allowed date window.
+E0142,partial_payment,TXN0142,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0143,exact_match,TXN0143,MATCH,Records agree.
+E0144,exact_match,TXN0144,MATCH,Records agree.
+E0145,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0146,exact_match,TXN0146,MATCH,Records agree.
+E0147,refund,TXN0147,MATCH,Settlement difference is explained by refund.
+E0148,exact_match,TXN0148,MATCH,Records agree.
+E0149,partial_payment,TXN0149,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0150,reference_typo,TXN0150,MATCH,Reference contains a minor formatting difference.
+E0151,exact_match,TXN0151,MATCH,Records agree.
+E0152,exact_match,TXN0152,MATCH,Records agree.
+E0153,date_shift,TXN0153,MATCH,Settlement occurred within the allowed date window.
+E0154,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0155,refund,TXN0155,MATCH,Settlement difference is explained by refund.
+E0156,exact_match,TXN0156,MATCH,Records agree.
+E0157,exact_match,TXN0157,MATCH,Records agree.
+E0158,fee_difference,TXN0158,MATCH,Settlement difference is explained by processing fee.
+E0159,exact_match,TXN0159,MATCH,Records agree.
+E0160,exact_match,TXN0160,MATCH,Records agree.
+E0161,exact_match,TXN0161,MATCH,Records agree.
+E0162,exact_match,TXN0162,MATCH,Records agree.
+E0163,refund,TXN0163,MATCH,Settlement difference is explained by refund.
+E0164,exact_match,TXN0164,MATCH,Records agree.
+E0165,exact_match,TXN0165,MATCH,Records agree.
+E0166,date_shift,TXN0166,MATCH,Settlement occurred within the allowed date window.
+E0167,refund,TXN0167,MATCH,Settlement difference is explained by refund.
+E0168,exact_match,TXN0168,MATCH,Records agree.
+E0169,partial_payment,TXN0169,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0170,refund,TXN0170,MATCH,Settlement difference is explained by refund.
+E0171,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0172,refund,TXN0172,MATCH,Settlement difference is explained by refund.
+E0173,fee_difference,TXN0173,MATCH,Settlement difference is explained by processing fee.
+E0174,exact_match,TXN0174,MATCH,Records agree.
+E0175,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0176,exact_match,TXN0176,MATCH,Records agree.
+E0177,exact_match,TXN0177,MATCH,Records agree.
+E0178,exact_match,TXN0178,MATCH,Records agree.
+E0179,exact_match,TXN0179,MATCH,Records agree.
+E0180,date_shift,TXN0180,MATCH,Settlement occurred within the allowed date window.
+E0181,exact_match,TXN0181,MATCH,Records agree.
+E0182,exact_match,TXN0182,MATCH,Records agree.
+E0183,exact_match,TXN0183,MATCH,Records agree.
+E0184,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0185,refund,TXN0185,MATCH,Settlement difference is explained by refund.
+E0186,exact_match,TXN0186,MATCH,Records agree.
+E0187,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0188,fee_difference,TXN0188,MATCH,Settlement difference is explained by processing fee.
+E0189,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0190,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0191,exact_match,TXN0191,MATCH,Records agree.
+E0192,exact_match,TXN0192,MATCH,Records agree.
+E0193,exact_match,TXN0193,MATCH,Records agree.
+E0194,exact_match,TXN0194,MATCH,Records agree.
+E0195,fee_difference,TXN0195,MATCH,Settlement difference is explained by processing fee.
+E0196,refund,TXN0196,MATCH,Settlement difference is explained by refund.
+E0197,exact_match,TXN0197,MATCH,Records agree.
+E0198,multiple_settlements,TXN0198,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0199,partial_payment,TXN0199,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0200,exact_match,TXN0200,MATCH,Records agree.
+E0201,fee_difference,TXN0201,MATCH,Settlement difference is explained by processing fee.
+E0202,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0203,partial_payment,TXN0203,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0204,exact_match,TXN0204,MATCH,Records agree.
+E0205,multiple_settlements,TXN0205,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0206,partial_payment,TXN0206,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0207,refund,TXN0207,MATCH,Settlement difference is explained by refund.
+E0208,fee_difference,TXN0208,MATCH,Settlement difference is explained by processing fee.
+E0209,exact_match,TXN0209,MATCH,Records agree.
+E0210,exact_match,TXN0210,MATCH,Records agree.
+E0211,date_shift,TXN0211,MATCH,Settlement occurred within the allowed date window.
+E0212,fee_difference,TXN0212,MATCH,Settlement difference is explained by processing fee.
+E0213,exact_match,TXN0213,MATCH,Records agree.
+E0214,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0215,exact_match,TXN0215,MATCH,Records agree.
+E0216,date_shift,TXN0216,MATCH,Settlement occurred within the allowed date window.
+E0217,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0218,exact_match,TXN0218,MATCH,Records agree.
+E0219,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0220,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0221,exact_match,TXN0221,MATCH,Records agree.
+E0222,exact_match,TXN0222,MATCH,Records agree.
+E0223,exact_match,TXN0223,MATCH,Records agree.
+E0224,date_shift,TXN0224,MATCH,Settlement occurred within the allowed date window.
+E0225,refund,TXN0225,MATCH,Settlement difference is explained by refund.
+E0226,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0227,fee_difference,TXN0227,MATCH,Settlement difference is explained by processing fee.
+E0228,date_shift,TXN0228,MATCH,Settlement occurred within the allowed date window.
+E0229,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0230,date_shift,TXN0230,MATCH,Settlement occurred within the allowed date window.
+E0231,partial_payment,TXN0231,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0232,exact_match,TXN0232,MATCH,Records agree.
+E0233,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0234,exact_match,TXN0234,MATCH,Records agree.
+E0235,reference_typo,TXN0235,MATCH,Reference contains a minor formatting difference.
+E0236,partial_payment,TXN0236,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0237,exact_match,TXN0237,MATCH,Records agree.
+E0238,multiple_settlements,TXN0238,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0239,refund,TXN0239,MATCH,Settlement difference is explained by refund.
+E0240,exact_match,TXN0240,MATCH,Records agree.
+E0241,reference_typo,TXN0241,MATCH,Reference contains a minor formatting difference.
+E0242,partial_payment,TXN0242,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0243,partial_payment,TXN0243,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0244,multiple_settlements,TXN0244,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0245,exact_match,TXN0245,MATCH,Records agree.
+E0246,exact_match,TXN0246,MATCH,Records agree.
+E0247,exact_match,TXN0247,MATCH,Records agree.
+E0248,fee_difference,TXN0248,MATCH,Settlement difference is explained by processing fee.
+E0249,exact_match,TXN0249,MATCH,Records agree.
+E0250,date_shift,TXN0250,MATCH,Settlement occurred within the allowed date window.
+E0251,exact_match,TXN0251,MATCH,Records agree.
+E0252,multiple_settlements,TXN0252,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0253,exact_match,TXN0253,MATCH,Records agree.
+E0254,date_shift,TXN0254,MATCH,Settlement occurred within the allowed date window.
+E0255,exact_match,TXN0255,MATCH,Records agree.
+E0256,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0257,multiple_settlements,TXN0257,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0258,exact_match,TXN0258,MATCH,Records agree.
+E0259,date_shift,TXN0259,MATCH,Settlement occurred within the allowed date window.
+E0260,exact_match,TXN0260,MATCH,Records agree.
+E0261,partial_payment,TXN0261,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0262,partial_payment,TXN0262,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0263,exact_match,TXN0263,MATCH,Records agree.
+E0264,partial_payment,TXN0264,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0265,exact_match,TXN0265,MATCH,Records agree.
+E0266,exact_match,TXN0266,MATCH,Records agree.
+E0267,exact_match,TXN0267,MATCH,Records agree.
+E0268,fee_difference,TXN0268,MATCH,Settlement difference is explained by processing fee.
+E0269,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0270,fee_difference,TXN0270,MATCH,Settlement difference is explained by processing fee.
+E0271,exact_match,TXN0271,MATCH,Records agree.
+E0272,multiple_settlements,TXN0272,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0273,exact_match,TXN0273,MATCH,Records agree.
+E0274,exact_match,TXN0274,MATCH,Records agree.
+E0275,fee_difference,TXN0275,MATCH,Settlement difference is explained by processing fee.
+E0276,reference_typo,TXN0276,MATCH,Reference contains a minor formatting difference.
+E0277,exact_match,TXN0277,MATCH,Records agree.
+E0278,exact_match,TXN0278,MATCH,Records agree.
+E0279,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0280,exact_match,TXN0280,MATCH,Records agree.
+E0281,refund,TXN0281,MATCH,Settlement difference is explained by refund.
+E0282,date_shift,TXN0282,MATCH,Settlement occurred within the allowed date window.
+E0283,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0284,exact_match,TXN0284,MATCH,Records agree.
+E0285,exact_match,TXN0285,MATCH,Records agree.
+E0286,exact_match,TXN0286,MATCH,Records agree.
+E0287,partial_payment,TXN0287,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0288,exact_match,TXN0288,MATCH,Records agree.
+E0289,exact_match,TXN0289,MATCH,Records agree.
+E0290,exact_match,TXN0290,MATCH,Records agree.
+E0291,exact_match,TXN0291,MATCH,Records agree.
+E0292,reference_typo,TXN0292,MATCH,Reference contains a minor formatting difference.
+E0293,exact_match,TXN0293,MATCH,Records agree.
+E0294,refund,TXN0294,MATCH,Settlement difference is explained by refund.
+E0295,exact_match,TXN0295,MATCH,Records agree.
+E0296,fee_difference,TXN0296,MATCH,Settlement difference is explained by processing fee.
+E0297,reference_typo,TXN0297,MATCH,Reference contains a minor formatting difference.
+E0298,exact_match,TXN0298,MATCH,Records agree.
+E0299,date_shift,TXN0299,MATCH,Settlement occurred within the allowed date window.
+E0300,exact_match,TXN0300,MATCH,Records agree.
+E0301,reference_typo,TXN0301,MATCH,Reference contains a minor formatting difference.
+E0302,fee_difference,TXN0302,MATCH,Settlement difference is explained by processing fee.
+E0303,fee_difference,TXN0303,MATCH,Settlement difference is explained by processing fee.
+E0304,exact_match,TXN0304,MATCH,Records agree.
+E0305,fee_difference,TXN0305,MATCH,Settlement difference is explained by processing fee.
+E0306,refund,TXN0306,MATCH,Settlement difference is explained by refund.
+E0307,exact_match,TXN0307,MATCH,Records agree.
+E0308,fee_difference,TXN0308,MATCH,Settlement difference is explained by processing fee.
+E0309,partial_payment,TXN0309,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0310,fee_difference,TXN0310,MATCH,Settlement difference is explained by processing fee.
+E0311,exact_match,TXN0311,MATCH,Records agree.
+E0312,fee_difference,TXN0312,MATCH,Settlement difference is explained by processing fee.
+E0313,reference_typo,TXN0313,MATCH,Reference contains a minor formatting difference.
+E0314,exact_match,TXN0314,MATCH,Records agree.
+E0315,reference_typo,TXN0315,MATCH,Reference contains a minor formatting difference.
+E0316,fee_difference,TXN0316,MATCH,Settlement difference is explained by processing fee.
+E0317,date_shift,TXN0317,MATCH,Settlement occurred within the allowed date window.
+E0318,exact_match,TXN0318,MATCH,Records agree.
+E0319,exact_match,TXN0319,MATCH,Records agree.
+E0320,refund,TXN0320,MATCH,Settlement difference is explained by refund.
+E0321,fee_difference,TXN0321,MATCH,Settlement difference is explained by processing fee.
+E0322,exact_match,TXN0322,MATCH,Records agree.
+E0323,exact_match,TXN0323,MATCH,Records agree.
+E0324,multiple_settlements,TXN0324,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0325,fee_difference,TXN0325,MATCH,Settlement difference is explained by processing fee.
+E0326,partial_payment,TXN0326,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0327,date_shift,TXN0327,MATCH,Settlement occurred within the allowed date window.
+E0328,fee_difference,TXN0328,MATCH,Settlement difference is explained by processing fee.
+E0329,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0330,exact_match,TXN0330,MATCH,Records agree.
+E0331,exact_match,TXN0331,MATCH,Records agree.
+E0332,exact_match,TXN0332,MATCH,Records agree.
+E0333,exact_match,TXN0333,MATCH,Records agree.
+E0334,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0335,refund,TXN0335,MATCH,Settlement difference is explained by refund.
+E0336,date_shift,TXN0336,MATCH,Settlement occurred within the allowed date window.
+E0337,date_shift,TXN0337,MATCH,Settlement occurred within the allowed date window.
+E0338,exact_match,TXN0338,MATCH,Records agree.
+E0339,exact_match,TXN0339,MATCH,Records agree.
+E0340,partial_payment,TXN0340,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0341,exact_match,TXN0341,MATCH,Records agree.
+E0342,refund,TXN0342,MATCH,Settlement difference is explained by refund.
+E0343,partial_payment,TXN0343,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0344,exact_match,TXN0344,MATCH,Records agree.
+E0345,refund,TXN0345,MATCH,Settlement difference is explained by refund.
+E0346,fee_difference,TXN0346,MATCH,Settlement difference is explained by processing fee.
+E0347,date_shift,TXN0347,MATCH,Settlement occurred within the allowed date window.
+E0348,reference_typo,TXN0348,MATCH,Reference contains a minor formatting difference.
+E0349,partial_payment,TXN0349,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0350,date_shift,TXN0350,MATCH,Settlement occurred within the allowed date window.
+E0351,partial_payment,TXN0351,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0352,exact_match,TXN0352,MATCH,Records agree.
+E0353,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0354,exact_match,TXN0354,MATCH,Records agree.
+E0355,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0356,exact_match,TXN0356,MATCH,Records agree.
+E0357,partial_payment,TXN0357,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0358,date_shift,TXN0358,MATCH,Settlement occurred within the allowed date window.
+E0359,refund,TXN0359,MATCH,Settlement difference is explained by refund.
+E0360,partial_payment,TXN0360,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0361,exact_match,TXN0361,MATCH,Records agree.
+E0362,exact_match,TXN0362,MATCH,Records agree.
+E0363,exact_match,TXN0363,MATCH,Records agree.
+E0364,date_shift,TXN0364,MATCH,Settlement occurred within the allowed date window.
+E0365,exact_match,TXN0365,MATCH,Records agree.
+E0366,exact_match,TXN0366,MATCH,Records agree.
+E0367,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0368,fee_difference,TXN0368,MATCH,Settlement difference is explained by processing fee.
+E0369,multiple_settlements,TXN0369,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0370,reference_typo,TXN0370,MATCH,Reference contains a minor formatting difference.
+E0371,reference_typo,TXN0371,MATCH,Reference contains a minor formatting difference.
+E0372,exact_match,TXN0372,MATCH,Records agree.
+E0373,partial_payment,TXN0373,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0374,partial_payment,TXN0374,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0375,exact_match,TXN0375,MATCH,Records agree.
+E0376,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0377,exact_match,TXN0377,MATCH,Records agree.
+E0378,multiple_settlements,TXN0378,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0379,partial_payment,TXN0379,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0380,exact_match,TXN0380,MATCH,Records agree.
+E0381,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0382,exact_match,TXN0382,MATCH,Records agree.
+E0383,exact_match,TXN0383,MATCH,Records agree.
+E0384,exact_match,TXN0384,MATCH,Records agree.
+E0385,exact_match,TXN0385,MATCH,Records agree.
+E0386,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0387,exact_match,TXN0387,MATCH,Records agree.
+E0388,partial_payment,TXN0388,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0389,partial_payment,TXN0389,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0390,exact_match,TXN0390,MATCH,Records agree.
+E0391,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0392,exact_match,TXN0392,MATCH,Records agree.
+E0393,exact_match,TXN0393,MATCH,Records agree.
+E0394,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0395,fee_difference,TXN0395,MATCH,Settlement difference is explained by processing fee.
+E0396,date_shift,TXN0396,MATCH,Settlement occurred within the allowed date window.
+E0397,exact_match,TXN0397,MATCH,Records agree.
+E0398,multiple_settlements,TXN0398,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0399,date_shift,TXN0399,MATCH,Settlement occurred within the allowed date window.
+E0400,partial_payment,TXN0400,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0401,partial_payment,TXN0401,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0402,partial_payment,TXN0402,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0403,refund,TXN0403,MATCH,Settlement difference is explained by refund.
+E0404,refund,TXN0404,MATCH,Settlement difference is explained by refund.
+E0405,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0406,exact_match,TXN0406,MATCH,Records agree.
+E0407,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0408,fee_difference,TXN0408,MATCH,Settlement difference is explained by processing fee.
+E0409,date_shift,TXN0409,MATCH,Settlement occurred within the allowed date window.
+E0410,fee_difference,TXN0410,MATCH,Settlement difference is explained by processing fee.
+E0411,exact_match,TXN0411,MATCH,Records agree.
+E0412,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0413,date_shift,TXN0413,MATCH,Settlement occurred within the allowed date window.
+E0414,refund,TXN0414,MATCH,Settlement difference is explained by refund.
+E0415,refund,TXN0415,MATCH,Settlement difference is explained by refund.
+E0416,reference_typo,TXN0416,MATCH,Reference contains a minor formatting difference.
+E0417,partial_payment,TXN0417,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0418,exact_match,TXN0418,MATCH,Records agree.
+E0419,refund,TXN0419,MATCH,Settlement difference is explained by refund.
+E0420,exact_match,TXN0420,MATCH,Records agree.
+E0421,exact_match,TXN0421,MATCH,Records agree.
+E0422,exact_match,TXN0422,MATCH,Records agree.
+E0423,refund,TXN0423,MATCH,Settlement difference is explained by refund.
+E0424,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0425,refund,TXN0425,MATCH,Settlement difference is explained by refund.
+E0426,exact_match,TXN0426,MATCH,Records agree.
+E0427,exact_match,TXN0427,MATCH,Records agree.
+E0428,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0429,reference_typo,TXN0429,MATCH,Reference contains a minor formatting difference.
+E0430,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0431,fee_difference,TXN0431,MATCH,Settlement difference is explained by processing fee.
+E0432,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0433,exact_match,TXN0433,MATCH,Records agree.
+E0434,exact_match,TXN0434,MATCH,Records agree.
+E0435,multiple_settlements,TXN0435,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0436,exact_match,TXN0436,MATCH,Records agree.
+E0437,exact_match,TXN0437,MATCH,Records agree.
+E0438,fee_difference,TXN0438,MATCH,Settlement difference is explained by processing fee.
+E0439,exact_match,TXN0439,MATCH,Records agree.
+E0440,refund,TXN0440,MATCH,Settlement difference is explained by refund.
+E0441,refund,TXN0441,MATCH,Settlement difference is explained by refund.
+E0442,exact_match,TXN0442,MATCH,Records agree.
+E0443,fee_difference,TXN0443,MATCH,Settlement difference is explained by processing fee.
+E0444,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0445,refund,TXN0445,MATCH,Settlement difference is explained by refund.
+E0446,date_shift,TXN0446,MATCH,Settlement occurred within the allowed date window.
+E0447,exact_match,TXN0447,MATCH,Records agree.
+E0448,partial_payment,TXN0448,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0449,refund,TXN0449,MATCH,Settlement difference is explained by refund.
+E0450,exact_match,TXN0450,MATCH,Records agree.
+E0451,fee_difference,TXN0451,MATCH,Settlement difference is explained by processing fee.
+E0452,partial_payment,TXN0452,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0453,exact_match,TXN0453,MATCH,Records agree.
+E0454,exact_match,TXN0454,MATCH,Records agree.
+E0455,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0456,exact_match,TXN0456,MATCH,Records agree.
+E0457,exact_match,TXN0457,MATCH,Records agree.
+E0458,fee_difference,TXN0458,MATCH,Settlement difference is explained by processing fee.
+E0459,refund,TXN0459,MATCH,Settlement difference is explained by refund.
+E0460,exact_match,TXN0460,MATCH,Records agree.
+E0461,date_shift,TXN0461,MATCH,Settlement occurred within the allowed date window.
+E0462,refund,TXN0462,MATCH,Settlement difference is explained by refund.
+E0463,refund,TXN0463,MATCH,Settlement difference is explained by refund.
+E0464,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0465,exact_match,TXN0465,MATCH,Records agree.
+E0466,exact_match,TXN0466,MATCH,Records agree.
+E0467,exact_match,TXN0467,MATCH,Records agree.
+E0468,exact_match,TXN0468,MATCH,Records agree.
+E0469,exact_match,TXN0469,MATCH,Records agree.
+E0470,date_shift,TXN0470,MATCH,Settlement occurred within the allowed date window.
+E0471,exact_match,TXN0471,MATCH,Records agree.
+E0472,reference_typo,TXN0472,MATCH,Reference contains a minor formatting difference.
+E0473,multiple_settlements,TXN0473,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0474,reference_typo,TXN0474,MATCH,Reference contains a minor formatting difference.
+E0475,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0476,multiple_settlements,TXN0476,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0477,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0478,fee_difference,TXN0478,MATCH,Settlement difference is explained by processing fee.
+E0479,exact_match,TXN0479,MATCH,Records agree.
+E0480,date_shift,TXN0480,MATCH,Settlement occurred within the allowed date window.
+E0481,partial_payment,TXN0481,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0482,refund,TXN0482,MATCH,Settlement difference is explained by refund.
+E0483,exact_match,TXN0483,MATCH,Records agree.
+E0484,missing_bank,NONE,EXCEPTION,Corresponding bank record is missing.
+E0485,exact_match,TXN0485,MATCH,Records agree.
+E0486,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0487,exact_match,TXN0487,MATCH,Records agree.
+E0488,date_shift,TXN0488,MATCH,Settlement occurred within the allowed date window.
+E0489,date_shift,TXN0489,MATCH,Settlement occurred within the allowed date window.
+E0490,date_shift,TXN0490,MATCH,Settlement occurred within the allowed date window.
+E0491,exact_match,TXN0491,MATCH,Records agree.
+E0492,reference_typo,TXN0492,MATCH,Reference contains a minor formatting difference.
+E0493,amount_mismatch,NONE,EXCEPTION,Amount difference cannot be explained by known adjustments.
+E0494,multiple_settlements,TXN0494,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0495,exact_match,TXN0495,MATCH,Records agree.
+E0496,multiple_settlements,TXN0496,HUMAN_REVIEW,One payment is represented by multiple settlement records.
+E0497,exact_match,TXN0497,MATCH,Records agree.
+E0498,reference_typo,TXN0498,MATCH,Reference contains a minor formatting difference.
+E0499,partial_payment,TXN0499,HUMAN_REVIEW,Payment covers only part of the invoice.
+E0500,fee_difference,TXN0500,MATCH,Settlement difference is explained by processing fee.
