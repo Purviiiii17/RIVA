@@ -20,31 +20,84 @@ RIVA reconciles financial transactions across **company ledger, settlements, ban
 
 ---
 
+## ✦ Contents
+
+- [Overview](#-overview)
+- [Architecture](#-architecture)
+- [Dashboard](#-dashboard)
+- [AI Investigation](#-ai-investigation)
+- [Explainability & Auditability](#-explainability--auditability)
+- [Evaluation](#-evaluation)
+- [Project Structure](#-project-structure)
+- [Setup](#-setup)
+- [Safety & Reliability](#-safety--reliability)
+- [Security](#-security)
+- [Current Status](#-current-status)
+- [Future Improvements](#-future-improvements)
+
+---
+
+## ✦ Overview
+
+RIVA is built around a simple principle:
+
+> **Use deterministic code where financial certainty matters, and AI where investigation and reasoning help.**
+
+The system processes a synthetic dataset of **500 financial transactions** and combines:
+
+| Layer | Responsibility |
+| --- | --- |
+| **Financial records** | Ledger, settlements, bank statement, and invoices |
+| **Reconciliation** | Deterministic transaction and amount checks |
+| **AI investigation** | Investigation of unresolved cases |
+| **Safety validation** | Confidence and escalation controls |
+| **Decision & audit** | Final decision plus traceable investigation data |
+| **RIVA dashboard** | Interactive inspection and review |
+
+---
+
 ## ✦ Architecture
 
 ```mermaid
 flowchart LR
-    A[Financial Data] --> B[Reconciliation Engine]
-    B --> C{Decision}
+    A[Financial Records] --> B[Reconciliation Engine]
+    B --> C{Reconciliation Result}
+
     C -->|MATCH| D[Final Decision]
     C -->|Unresolved| E[AI Investigation]
+
     E --> F[Gemini]
     F -->|Fallback| G[Groq]
+
     F --> H[Safety Validation]
     G --> H
+
     H -->|Safe| D
     H -->|Uncertain| I[Human Review]
+
     D --> J[Audit Trail]
     I --> J
     J --> K[RIVA Dashboard]
 ```
 
-**Core idea:** deterministic reconciliation comes first. AI is used only for investigation, with provider fallback, safety validation, and human escalation around it.
+<details>
+<summary><strong>How the architecture works</strong></summary>
 
-### Data sources
-`company_ledger.csv` · `settlements.csv` · `bank_statement.csv` · `invoices.csv`
+1. **Financial records** provide the evidence used for reconciliation.
+2. **Reconciliation Engine** performs deterministic checks across the available records.
+3. **Matched cases** can be resolved directly without an LLM.
+4. **Unresolved cases** move to the AI investigation stage.
+5. **Gemini** is used as the primary AI provider.
+6. **Groq** provides the fallback path when Gemini cannot complete the investigation.
+7. **Safety validation** checks the AI result before the final outcome.
+8. **Human Review** is available for cases that should not be resolved automatically.
+9. **Audit Trail** retains the investigation metadata.
+10. **RIVA Dashboard** exposes the resulting evidence and decisions.
+
+</details>
 
 ### Decision flow
+
 **Financial records → Reconciliation → AI investigation when needed → Safety validation → Final decision → Audit trail**
 
 ---
@@ -55,15 +108,13 @@ RIVA provides five focused views:
 
 | View | Purpose |
 | --- | --- |
-| **Overview** | Dataset metrics, reconciliation health, and benchmark status |
-| **Transaction Inspector** | Full ledger, settlement, bank, invoice, reconciliation, and AI evidence |
-| **Settlement Q&A** | Evidence-grounded questions about a transaction |
-| **Audit Trail** | AI provider, decision, confidence, safety status, and reason |
-| **Human Review** | Read-only queue for cases requiring manual review |
+| **Overview** | Dataset metrics, reconciliation health, benchmark verification, scenario breakdown, and recent exceptions |
+| **Transaction Inspector** | Inspect ledger, settlement, bank, invoice, reconciliation, and AI evidence for one transaction |
+| **Settlement Q&A** | Ask transaction-specific questions using recorded evidence |
+| **Audit Trail** | Review AI provider, decision, confidence, safety status, and reason |
+| **Human Review** | Read-only queue for transactions requiring manual review |
 
----
-
-## ✦ Overview Metrics
+### Overview metrics
 
 The current synthetic evaluation contains **500 transactions**.
 
@@ -73,16 +124,6 @@ The current synthetic evaluation contains **500 transactions**.
 | HUMAN_REVIEW | **69** | 13.8% |
 | EXCEPTION | **58** | 11.6% |
 | **Total** | **500** | **100%** |
-
-### Benchmark
-
-| Metric | Result |
-| --- | ---: |
-| Correct decisions | **500** |
-| Total decisions | **500** |
-| Accuracy | **100.00%** |
-| Incorrect | **0** |
-| Unresolved | **0** |
 
 ---
 
@@ -98,11 +139,55 @@ RIVA uses **Gemini as the primary provider** and **Groq as the fallback** when t
 | API errors | **0** |
 | Safety overrides | **0** |
 
-AI output is not treated as financial truth by itself. The system keeps the investigation grounded in recorded transaction evidence.
+<details>
+<summary><strong>AI decision path</strong></summary>
+
+```text
+Unresolved transaction
+        │
+        ▼
+     Gemini
+        │
+   ┌────┴────┐
+ success   failure
+   │          │
+   │          ▼
+   │        Groq
+   │          │
+   └────┬─────┘
+        ▼
+ Safety validation
+        │
+   ┌────┴──────────┐
+   ▼               ▼
+Decision       HUMAN_REVIEW
+```
+
+AI output is not treated as financial truth by itself. Investigations remain grounded in the recorded transaction evidence.
+
+</details>
 
 ---
 
-## ✦ Example: TXN0013
+## ✦ Explainability & Auditability
+
+RIVA exposes the evidence behind AI-assisted investigations instead of presenting an unexplained model output.
+
+<details>
+<summary><strong>What can be inspected</strong></summary>
+
+- **Evidence Used** — financial records supplied to the investigation.
+- **Prompt Sent to the Model** — the constructed investigation prompt.
+- **AI Response** — provider response and resulting decision.
+- **Provider** — Gemini or Groq.
+- **Confidence** — recorded confidence score.
+- **Safety Override** — recorded safety status.
+- **Reason** — explanation associated with the decision.
+- **Final Decision** — final system outcome.
+
+</details>
+
+### Example: TXN0013
 
 **TXN0013** demonstrates how RIVA handles missing bank evidence.
 
@@ -118,16 +203,36 @@ A missing bank record is **not treated as a zero-value credit**. The transaction
 
 ---
 
-## ✦ Explainability & Auditability
+## ✦ Evaluation
 
-For AI-investigated cases, RIVA can expose:
+The current benchmark is based on the project's **synthetic dataset and ground-truth labels**.
 
-- **Evidence Used** — the financial records supplied to the investigation.
-- **Prompt Sent to the Model** — the constructed investigation prompt.
-- **AI Response** — the provider response and resulting decision.
-- **Audit Record** — provider, confidence, safety status, reason, and final decision.
+| Metric | Result |
+| --- | ---: |
+| Correct decisions | **500** |
+| Total decisions | **500** |
+| Accuracy | **100.00%** |
+| Incorrect | **0** |
+| Unresolved | **0** |
 
-This creates a traceable path from **financial evidence → decision** instead of an unexplained AI output.
+> **Note:** 100.00% is the result on the current synthetic evaluation dataset. It should not be interpreted as real-world production accuracy.
+
+<details>
+<summary><strong>Evaluation pipeline</strong></summary>
+
+```text
+Ground-truth labels
+        +
+Rule decisions
+        +
+AI decisions
+        ↓
+evaluation_results.csv
+        ↓
+Benchmark metrics
+```
+
+</details>
 
 ---
 
@@ -163,13 +268,12 @@ ai-finance-controller/
 └── requirements.txt
 ```
 
----
-
-## ✦ Module Responsibilities
+<details>
+<summary><strong>Module responsibilities</strong></summary>
 
 | Module | Responsibility |
 | --- | --- |
-| `app.py` | Main Streamlit application |
+| `app.py` | Main Streamlit application and interactive dashboard |
 | `reconciler.py` | Deterministic reconciliation |
 | `ai_investigator.py` | AI investigation and Gemini → Groq fallback |
 | `settlement_qna.py` | Evidence-grounded transaction Q&A |
@@ -178,9 +282,11 @@ ai-finance-controller/
 | `dashboard.py` | Terminal dashboard |
 | `data_generator.py` | Synthetic financial data generation |
 
+</details>
+
 ---
 
-## ✦ Getting Started
+## ✦ Setup
 
 ### 1. Install dependencies
 
@@ -192,22 +298,28 @@ pip install -r requirements.txt
 
 Create a `.env` file in the project root:
 
-```text
+```env
 GEMINI_API_KEY=your_gemini_api_key
 GROQ_API_KEY=your_groq_api_key
 ```
 
-Never commit `.env` to the repository.
+> Never commit `.env` or real API keys to GitHub.
 
-### 3. Run RIVA
+### 3. Run the RIVA dashboard
 
 ```bash
 streamlit run src/app.py
 ```
 
-Open **http://localhost:8501** in your browser.
+Then open:
+
+```text
+http://localhost:8501
+```
 
 ### Optional: regenerate and evaluate the dataset
+
+Run the pipeline in order:
 
 ```bash
 python src/data_generator.py
@@ -216,22 +328,39 @@ python src/ai_investigator.py
 python src/evaluator.py
 ```
 
+### Inspect a transaction
+
+```bash
+python src/inspector.py TXN0013
+```
+
+### Run Settlement Q&A
+
+```bash
+python src/settlement_qna.py
+```
+
 ---
 
 ## ✦ Safety & Reliability
 
-- **Deterministic calculations** — financial arithmetic is handled programmatically.
+RIVA is designed so that AI is not the only source of truth.
+
+- **Deterministic calculations** — financial arithmetic and reconciliation checks are handled programmatically.
 - **No fabricated evidence** — missing records remain missing.
 - **Evidence-grounded AI** — investigations use recorded transaction evidence.
 - **Provider fallback** — Groq provides a fallback path when Gemini cannot complete an investigation.
 - **Human escalation** — uncertain cases can remain `HUMAN_REVIEW`.
 - **Auditability** — AI-assisted decisions retain investigation metadata.
+- **Missing-record protection** — an absent bank record is not interpreted as a zero-value credit.
 
 ---
 
 ## ✦ Security
 
 API credentials are kept in `.env` and excluded from Git tracking.
+
+The repository's ignore rules include:
 
 ```text
 .env
@@ -240,23 +369,26 @@ __pycache__/
 .vscode/
 ```
 
+Never publish real API keys, credentials, or other secrets in source files or documentation.
+
 ---
 
 ## ✦ Current Status
 
-- ✅ Deterministic financial reconciliation
-- ✅ Multi-source evidence matching
-- ✅ Gemini AI investigation
-- ✅ Groq fallback
-- ✅ Safety validation
-- ✅ Streamlit dashboard
-- ✅ Transaction Inspector
-- ✅ Settlement Q&A
-- ✅ Audit Trail
-- ✅ Human Review queue
-- ✅ Ground-truth evaluation
-- ✅ 500-transaction benchmark
-- ✅ Evidence and prompt inspection
+| Capability | Status |
+| --- | :---: |
+| Deterministic reconciliation | ✅ |
+| Multi-source evidence matching | ✅ |
+| Gemini investigation | ✅ |
+| Groq fallback | ✅ |
+| Safety validation | ✅ |
+| Streamlit dashboard | ✅ |
+| Transaction Inspector | ✅ |
+| Settlement Q&A | ✅ |
+| Audit Trail | ✅ |
+| Human Review queue | ✅ |
+| Ground-truth evaluation | ✅ |
+| Evidence and prompt inspection | ✅ |
 
 ---
 
